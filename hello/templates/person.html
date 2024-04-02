@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class=mb-4>
+      
+    
+    <h2>User form</h2>
+    <form method="post" action="/person/postuser/">
+        {% csrf_token %}
+        <div class='mt-3'>
+          <label for="validationCustom03" class="form-label">Name</label>
+          <input name="name" type="text" class="form-control" id="validationCustom03" required>
+          <div class="invalid-feedback">
+            Please provide a valid name.
+          </div>
+        </div>
+
+        <div class='mt-3'>
+          <label for="validationCustom03" class="form-label">Age</label>
+          <input name="age" type="number" class="form-control" id="validationCustom03" required>
+          <div class="invalid-feedback">
+            Please provide a valid age.
+          </div>
+        </div>
+
+
+        <div class="mb-3 mt-3">
+          <label for="validationCustom04" class="form-label">Languages</label>
+          <select class="form-select" multiple name='languages' id="validationCustom04" required>
+            <option>Python</option>
+            <option>JavaScript</option>
+            <option>C++</option>
+            <option>Java</option>
+          </select>
+          <div class="invalid-feedback">
+            Please provide a valid language.
+          </div>
+        </div>
+      
+        <input type="submit" class='btn btn-primary mb-4' value="Send" />
+    </form>
+    </div>
+{% endblock content %}

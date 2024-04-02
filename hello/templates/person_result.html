@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Результаты{% endblock title %}
+{% block header %}Результаты{% endblock header %}
+
+{% block content %}
+
+<div class="card mt-4 mb-4" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Ответы из формы</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Name: {{ name }}</li>
+    <li class="list-group-item">Age: {{ age }}</li>
+    <li class="list-group-item">Languages:
+      {% for language in langs %}
+        <span class="badge text-bg-secondary">{{ language }}</span>
+      {% endfor %}</li>
+  </ul>
+</div>
+{% endblock content %}
+
+
