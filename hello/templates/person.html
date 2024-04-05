@@ -1,15 +1,16 @@
 {% extends "base.html" %}
+{% block title %}Форма для сбора информации{% endblock title %}
 
 {% block content %}
     <div class=mb-4>
       
     
-    <h2>User form</h2>
+    <h2>Форма для сбора информации</h2>
     <form method="post" action="/person/postuser/">
         {% csrf_token %}
         <div class='mt-3'>
           <label for="validationCustom03" class="form-label">Name</label>
-          <input name="name" type="text" class="form-control" id="validationCustom03" required>
+          <input name="name" type="text" class="form-control" id="validationCustom03" required pattern="[A-Za-zА-Яа-яЁё\s]+">
           <div class="invalid-feedback">
             Please provide a valid name.
           </div>
@@ -17,7 +18,7 @@
 
         <div class='mt-3'>
           <label for="validationCustom03" class="form-label">Age</label>
-          <input name="age" type="number" class="form-control" id="validationCustom03" required>
+          <input name="age" type="number" class="form-control" id="validationCustom03" required min = "1">
           <div class="invalid-feedback">
             Please provide a valid age.
           </div>
@@ -36,6 +37,12 @@
             Please provide a valid language.
           </div>
         </div>
+
+      <div class="mb-3 mt-3">
+        <label for="validationCustom05" class="form-label">Comment</label>
+        <textarea name="comment" class="form-control" id="validationCustom05"></textarea>
+      </div>
+
       
         <input type="submit" class='btn btn-primary mb-4' value="Send" />
     </form>

@@ -1,0 +1,28 @@
+.invalid-feedback {
+  display: block;
+  color: red;
+}
+
+input:valid, select:valid, textarea:valid {
+  border: 1px solid green;
+}
+
+input:invalid,
+textarea:invalid,
+select:invalid {
+  border: 1px solid red;
+}
+
+input:required,
+select:required {
+  background-color: #e9e7e7;
+}
+
+input:optional {
+  background-color: #ffffff;
+}
+
+input[type="submit"] {
+  background-color: blue; 
+  color: white; 
+}

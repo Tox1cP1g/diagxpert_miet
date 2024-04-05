@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ac&$^l-ulf36!ki(ih9s$ke1ha3vsvrai-l8v*%i0qq5ym33@h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev']
 
@@ -31,6 +32,8 @@ ALLOWED_HOSTS = ['25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.re
 # Application definition
 
 INSTALLED_APPS = [
+    # 'users.apps.UsersConfig',
+    # 'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hello',
+    # 'bootstrap4',
+    # 'crispy-bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -78,7 +83,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    'other_db': {
+      'ENGINE': 'django.db.backends.sqlite3',
+      'NAME': BASE_DIR / 'db.sqlite4',
+  }
+
 }
 
 
@@ -123,4 +133,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ['https://25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev/']
+CSRF_TRUSTED_ORIGINS = ['https://25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev/', 'https://25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev:3000']
+
+
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_URL = "/media/"
