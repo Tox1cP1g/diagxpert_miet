@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+# from hello import models
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-ac&$^l-ulf36!ki(ih9s$ke1ha3vsvrai-l8v*%i0qq5ym33@h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev']
+ALLOWED_HOSTS = ['25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev', '127.0.0.1', '127.0.0.1:8000', '192.168.0.1']
 
 
 # Application definition
@@ -126,7 +127,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'hello/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, "hello/static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -137,5 +140,14 @@ CSRF_TRUSTED_ORIGINS = ['https://25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspc
 
 
 # CRISPY_TEMPLATE_PACK = 'bootstrap4'
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+# MEDIA_URL = "/media/"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# AUTH_USER_MODEL = 'hello.models.CustomUser'
+EMAIL_HOST = 'smtp.beget.com'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = 'diagxpert@smartdiag.space'
+EMAIL_HOST_PASSWORD = '14210918Vk!1'
+EMAIL_USE_TLS = False
+# EMAIL_SERVER = 'diagxpert@smartdiag.space'
+# EMAIL_ADMIN = 'vak2004@list.ru'

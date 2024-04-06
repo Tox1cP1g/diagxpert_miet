@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-
-
+{% load static %}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/auth.css' %}">
+
+
 <form method="POST">
   {% csrf_token %}
   <div class="container">
@@ -15,6 +17,7 @@
     <span class="reg"> <a href="/registration">Регистрация</a></span>
   </div>
 </form>
+
 
 
 {% endblock content %}

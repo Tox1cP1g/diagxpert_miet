@@ -1,5 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/successfulauth.css' %}">
 <form method="POST">
   <div class="container">
     <label><b>Вы успешно авторизовались</b></label>
 </form>
+{% endblock content %}
 

@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from hello import views
+from hello.views import FeedbackCreateView
 # from .views import signup
 
 
@@ -26,7 +27,8 @@ urlpatterns = [
     path("person/", views.person),
     path("person/postuser/", views.postuser),
     path("picture/", views.picture),
-    path("authorization/", views.form_authorization),
-    path("registration/", views.register_user),
+    path("authorization/", views.login_view),
+    path("registration/", views.form_registration),
     path("registration/success/", views.registration_success),
+    path('feedback/', FeedbackCreateView.as_view(), name='feedback'),
 ]

@@ -2,8 +2,19 @@ from django.http import HttpResponse
 # from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm
-from .models import CustomUser
+from .forms import UserRegistrationForm, FeedbackCreateForm
+from .models import CustomUser, LoginForm, Feedback
+from django.contrib.auth import authenticate, login
+from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import CreateView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from hello.utils import get_client_ip
+from hello.email import send_contact_email_message
+
+
+
+
 
 
 # from django.http import HttpResponse
@@ -13,7 +24,7 @@ import sqlite3
 
 
 def index(request):
-    return render(request, "index.html")
+    return render(request, "index.html", {'username': request.user.username})
 
 
 def contacts(request):
@@ -22,6 +33,7 @@ def contacts(request):
 
 def person(request):
     return render(request, "person.html")
+
 
 @csrf_exempt
 def postuser(request):
@@ -43,50 +55,61 @@ def picture(request):
     return render(request, "picture.html")
 
 
-
-
-
 # @csrf_exempt
-def form_authorization(request):
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('Login')
+        password = request.POST.get('Password')
+        print(login, password)
+        try:
+            user = CustomUser.objects.get(login=username, password=password)
+            user = authenticate(request, custom_user=user, password=password)
+            print(authenticate(request, custom_user=user, password=password))
+            if user is None:
+                login(request, user)
+                print('Вход выполнен')
+                return render(request, 'successfulauth.html')
+        except ObjectDoesNotExist:
+            print('ERROR')
+            return render(request, 'auth_bad.html', {'error_message': 'User with this login does not exist.'})
+    print('Без ошибки')
+    return render(request, 'authorization.html')
+
+
+# if request.method == 'POST':
+  #   # {% csrf_token %}
+  #   Login = request.POST.get('Login')
+  #   Password = request.POST.get('Password')
+  #   db_lp = sqlite3.connect('login_password.db')
+  #   cursor_db = db_lp.cursor()
+  #   cursor_db.execute(('''SELECT password FROM passwords
+  #                                              WHERE login = '{}';
+  #                                              ''').format(Login))
+  #   pas = cursor_db.fetchall()
+  #   cursor_db.close()
+  #   try:
+  #     if pas[0][0] != Password:
+  #              return render(request, 'auth_bad.html')
+  #   except:
+  #          return render(request, 'auth_bad.html')
+  #
+  #   db_lp.close()
+  #   return render(request, 'successfulauth.html')
+  # return render(request, 'authorization.html')
+
+
+
+@csrf_protect
+def form_registration(request):
   if request.method == 'POST':
     # {% csrf_token %}
     Login = request.POST.get('Login')
     Password = request.POST.get('Password')
-    db_lp = sqlite3.connect('login_password.db')
-    cursor_db = db_lp.cursor()
-    cursor_db.execute(('''SELECT password FROM passwords
-                                               WHERE login = '{}';
-                                               ''').format(Login))
-    pas = cursor_db.fetchall()
-    cursor_db.close()
-    try:
-      if pas[0][0] != Password:
-               return render(request, 'auth_bad.html')
-    except:
-           return render(request, 'auth_bad.html')
-
-    db_lp.close()
-    return render(request, 'successfulauth.html')
-  return render(request, 'authorization.html')
-
-
-
-# @csrf_protect
-# def form_registration(request):
-#   if request.method == 'POST':
-#     # {% csrf_token %}
-#     Login = request.POST.get('Login')
-#     Password = request.POST.get('Password')
-#     db_lp = sqlite3.connect('login_password.db')
-#     cursor_db = db_lp.cursor()
-#     sql_insert = '''INSERT INTO passwords VALUES('{}','{}');'''.format(Login, Password)
-#     cursor_db.execute(sql_insert)
-#     db_lp.commit()
-#     db_lp.commit()
-#     cursor_db.close()
-#     db_lp.close()
-#     return render(request, 'successfulregis.html')
-#   return render(request, 'registration.html')
+    print(Login, Password)
+    user = CustomUser(login=Login, password=Password)
+    user.save()
+    return render(request, 'successfulregis.html')
+  return render(request, 'registration.html')
 
 
 
@@ -102,6 +125,25 @@ def register_user(request):
       form = UserRegistrationForm()
   return render(request, 'auth_bad.html', {'form': form})
 
+
 def registration_success(request):
   return render(request, 'successfulregis.html')
+
+
+class FeedbackCreateView(SuccessMessageMixin, CreateView):
+    model = Feedback
+    form_class = FeedbackCreateForm
+    success_message = 'Ваше письмо успешно отправлено администрации сайта'
+    template_name = 'feedback.html'
+    extra_context = {'title': 'Контактная форма'}
+    print('otpravleno')
+    success_url = reverse_lazy('feedback')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.ip_address = get_client_ip(self.request)
+            feedback.User = self.request.user
+            send_contact_email_message(feedback.subject, feedback.email, feedback.content, feedback.ip_address, feedback.user_id)
+        return super().form_valid(form)
 

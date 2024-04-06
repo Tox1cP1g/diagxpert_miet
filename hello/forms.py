@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser
+from .models import CustomUser, LoginForm, Feedback
 
 
 
@@ -16,3 +16,22 @@ class UserRegistrationForm(forms.ModelForm):
         model = CustomUser
         fields = ['login', 'password']
 
+
+
+
+class FeedbackCreateForm(forms.ModelForm):
+    """
+    Форма отправки обратной связи
+    """
+
+    class Meta:
+        model = Feedback
+        fields = ('subject', 'email', 'content')
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы
+        """
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control', 'autocomplete': 'off'})
