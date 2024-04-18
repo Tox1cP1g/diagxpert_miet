@@ -7,6 +7,8 @@ import telebot
 import requests
 
 bot = telebot.TeleBot("6805524954:AAF1LHY_DOAUQ6kbSO0yrMyiEeO_4F7enqQ")
+
+
 def send_message(text: str):
     token = "6805524954:AAF1LHY_DOAUQ6kbSO0yrMyiEeO_4F7enqQ"
     url = "https://api.telegram.org/bot"
