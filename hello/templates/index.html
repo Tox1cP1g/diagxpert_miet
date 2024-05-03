@@ -1,26 +1,27 @@
 {% extends "base.html" %}
-{% block title %}Главная, {{ username }}{% endblock title %}
-{% block header %}Привет, {{ username }}!{% endblock header %}
+{% block title %}Главная{% endblock title %}
+{% block header %}Привет, {{ username }}! Последние новости:{% endblock header %}
 
 {% block content %}
 
-
+<br>
 <div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for article in articles %}
   <div class="col">
     <div class="card h-100">
-      <!-- <img src="hello/templates/хуета.jpeg" class="card-img-top" alt="..."> -->
       <div class="card-body">
-        <h5 class="card-title">Заголовок карточки</h5>
-        <p class="card-text">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+        <a><h5 class="card-title">{{ article.title }}</h5></a>
+        <p class="card-text">{{ article.body }}</p>
       </div>
       <div class="card-footer">
-        <small class="text-body-secondary">Последнее обновление 3 мин. назад</small>
+        <small class="text-body-secondary">Last updated {{ article.date }}</small>
       </div>
     </div>
   </div>
-  <div class="col">
+  {% endfor %}
+  <!-- <div class="col">
     <div class="card h-100">
-      <!-- <img src="..." class="card-img-top" alt="..."> -->
+      <!-- <img src="..." class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Заголовок карточки</h5>
         <p class="card-text">Под этой карточкой есть вспомогательный текст, который является естественным введением к дополнительному содержанию.</p>
@@ -32,7 +33,7 @@
   </div>
   <div class="col">
     <div class="card h-100">
-      <!-- <img src="..." class="card-img-top" alt="..."> -->
+      <!-- <img src="..." class="card-img-top" alt="..."> 
       <div class="card-body">
         <h5 class="card-title">Заголовок карточки</h5>
         <p class="card-text">Это более широкая карта С вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Эта карточка имеет даже более длинный контент, чем первая, чтобы показать действие одинаковой высоты.</p>
@@ -41,7 +42,7 @@
         <small class="text-body-secondary">Последнее обновление 3 мин. назад</small>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 

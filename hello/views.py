@@ -11,7 +11,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from hello.utils import get_client_ip
 from hello.email import send_contact_email_message
-
+from django.shortcuts import render
+from newsapi import NewsApiClient
+from news.models import Articles
 
 
 
@@ -24,7 +26,26 @@ import sqlite3
 
 
 def index(request):
-    return render(request, "index.html", {'username': request.user.username})
+    # context = get_context_data(request)
+    # context['articles'] = Articles.objects.all()
+    print(Articles.objects.all())
+    articles = Articles.objects.all()
+    for article in articles:
+      print(f'Title: {article.title}')
+      print(f'Body: {article.body}')
+      print(f'Date: {article.date}')
+      print('--------------------------')
+    Articles.objects.all()
+    context = {
+        'articles': articles
+    }
+    # print(context)
+    # context = super(Articles, self).get_context_data(**kwargs)                        
+    # context['title'] = 'Заголовок страницы'
+    # context['body'] = 'Содержимое страницы'
+    # context['date'] = 'Дата обновления'
+    # get_context_data(Articles.objects.all())
+    return render(request, "index.html", {'username': request.user.username, 'articles': articles})
 
 
 def contacts(request):
@@ -147,3 +168,41 @@ class FeedbackCreateView(SuccessMessageMixin, CreateView):
             send_contact_email_message(feedback.subject, feedback.email, feedback.content, feedback.ip_address, feedback.user_id)
         return super().form_valid(form)
 
+
+# Создание функции представления
+def index1(request):
+
+    newsapi = NewsApiClient(api_key ='02edf36d823544e8a1618643b7622f76')
+    top = newsapi.get_top_headlines(sources ='techcrunch')
+
+    l = top['articles']
+    dsc =[]
+    nws =[]
+    im =[]
+
+    for i in range(len(l)):
+      f = l[i]
+      nws.append(f['title'])
+      dsc.append(f['description'])
+      im.append(f['urlToImage'])
+      mylist = zip(nws, dsc, im)
+
+    return render(request, 'index1.html', context ={"mylist":mylist})
+
+# def get_context_data(self, **kwargs):
+#     context = super().get_context_data(**kwargs)
+#     context['title', 'body', 'date'] = Articles.objects.all()
+
+def my_view(request):
+  # context = get_context_data(request)
+  context['articles'] = Articles.objects.all()
+  # print(Articles.objects.all(id=1))
+  return render(request, 'index.html', context)
+
+def get_context_data(self, **kwargs):
+  context = super().get_context_data(**kwargs)
+  context['title'] = 'Заголовок страницы'
+  context['body'] = 'Содержимое страницы'
+  context['date'] = 'Дата обновления'
+  print(context)
+  return context

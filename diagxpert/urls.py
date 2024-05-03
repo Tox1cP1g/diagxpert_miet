@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from hello import views
 from hello.views import FeedbackCreateView
+from django.conf.urls import include
 # from .views import signup
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('news/', include('news.urls')),
     path("", views.index),
     path("contacts/", views.contacts),
     path("person/", views.person),
@@ -31,4 +33,6 @@ urlpatterns = [
     path("registration/", views.form_registration),
     path("registration/success/", views.registration_success),
     path('feedback/', FeedbackCreateView.as_view(), name='feedback'),
+    path('index1', views.index1, name ='index'),
+  
 ]
