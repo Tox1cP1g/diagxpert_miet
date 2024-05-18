@@ -1,0 +1,14 @@
+asgiref==3.7.2
+bootstrap4==0.1.0
+certifi==2024.2.2
+charset-normalizer==3.3.2
+crispy-bootstrap4==2024.1
+Django==5.0.2
+django-crispy-forms==2.1
+idna==3.6
+pyTelegramBotAPI==4.16.1
+requests==2.31.0
+sqlparse==0.4.4
+telebot==0.0.5
+typing_extensions==4.9.0
+urllib3==2.2.1
