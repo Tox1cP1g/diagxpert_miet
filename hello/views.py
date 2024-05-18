@@ -12,7 +12,6 @@ from django.urls import reverse_lazy
 from hello.utils import get_client_ip
 from hello.email import send_contact_email_message
 from django.shortcuts import render
-from newsapi import NewsApiClient
 from news.models import Articles
 
 

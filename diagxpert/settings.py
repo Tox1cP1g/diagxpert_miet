@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 import os
 # from hello import models
@@ -27,7 +26,7 @@ SECRET_KEY = 'django-insecure-ac&$^l-ulf36!ki(ih9s$ke1ha3vsvrai-l8v*%i0qq5ym33@h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev', '127.0.0.1', '127.0.0.1:8000', '192.168.0.1']
+ALLOWED_HOSTS = ['25182f8b-a6ab-4da3-bf0e-ce5e78ceee6d-00-1bttspcfigkvl.sisko.replit.dev', '127.0.0.1', '127.0.0.1:8000', '192.168.0.1', '45.12.238.170', 'api.diagxpert.ru']
 
 
 # Application definition
@@ -74,8 +73,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'diagxpert.wsgi.application'
 
 
 # Database

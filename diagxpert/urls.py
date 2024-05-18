@@ -33,6 +33,6 @@ urlpatterns = [
     path("registration/", views.form_registration),
     path("registration/success/", views.registration_success),
     path('feedback/', FeedbackCreateView.as_view(), name='feedback'),
-    path('index1', views.index1, name ='index'),
-  
+    path('index1', views.index1, name ='index')
 ]
+
